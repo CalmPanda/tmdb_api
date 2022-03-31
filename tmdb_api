@@ -1,0 +1,30 @@
+import requests
+import pandas as pd
+
+ids = [1726,102899,363088,99861,299534,299536,284054,497698,271110,1771,100402,299537,284052,524434,118340,283995,10138,68721,566525,429617,315635,634649,24428,1724,10195,284053,76338]
+results_list = []
+for i in ids: 
+    url = "https://api.themoviedb.org/3/movie/{}?api_key=dad1df188523a8ff8684d6d268f1aaa8".format(i)
+    response = requests.get(url)
+    results_list.append(response.json())
+
+# Check dictionary keys
+# print(results_list[0].keys())
+# list of keys for dataframe - ['id','title','release_date','runtime','budget','revenue','popularity','vote_average','vote_count']
+
+full_details = []
+for index in range(len(results_list)):
+    full_details.append([results_list[index]['id'], results_list[index]['title'], 
+    results_list[index]['release_date'], results_list[index]['runtime'], 
+    results_list[index]['budget'], results_list[index]['revenue'], 
+    results_list[index]['popularity'],results_list[index]['vote_average'],
+    results_list[index]['vote_count']])
+
+# Create dataframe and append data
+df = pd.DataFrame(columns=['id','title','release_date','runtime','budget','revenue','popularity','vote_average','vote_count'])
+for movie in full_details:
+    temporary_df = pd.DataFrame([movie], columns=['id','title','release_date','runtime','budget','revenue','popularity','vote_average','vote_count'])
+    df = df.append(temporary_df, ignore_index=True)
+
+# Save to CSV file
+df.to_csv('marvel_movies.csv', index=False)
