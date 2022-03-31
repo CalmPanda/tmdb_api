@@ -4,7 +4,7 @@ import pandas as pd
 ids = [1726,102899,363088,99861,299534,299536,284054,497698,271110,1771,100402,299537,284052,524434,118340,283995,10138,68721,566525,429617,315635,634649,24428,1724,10195,284053,76338]
 results_list = []
 for i in ids: 
-    url = "https://api.themoviedb.org/3/movie/{}?api_key=dad1df188523a8ff8684d6d268f1aaa8".format(i)
+    url = "https://api.themoviedb.org/3/movie/{}?api_key=<<YOUR API KEY>>".format(i)
     response = requests.get(url)
     results_list.append(response.json())
 
